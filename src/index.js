@@ -64,10 +64,11 @@ function filterBreeds(letter = "all"){
     }
 }
     
-            
-
     const allLis = document.querySelectorAll("li")
-    
+    const allOption = document.createElement("OPTION")
+    allOption.value = "all"
+    allOption.innerText = "all"
+    document.querySelector('#breed-dropdown').append(allOption)
     
     document.querySelector('#breed-dropdown').onchange = function(){
         document.querySelector('ul#dog-breeds').innerHTML = "";
