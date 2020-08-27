@@ -38,90 +38,57 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     }
 
-
-    function addBreed(breeds) {
-        for (let element in breeds) {
-            addLiTag(element)
-            if (breeds[element].length != 0) {
-                let ul = document.createElement('ul');
-                for (const subBreed of breeds[element]) {
-                    let li = document.createElement('li')
-                    li.innerText = subBreed
-                    ul.appendChild(li);
-                    document.getElementById(element).appendChild(ul);
-                }
-            }
-        }
-    }
+function filterBreeds(letter = "all"){
     
-
-    // switch(document.querySelector('#breed-dropdown').value){
-    //     case "a":
-    //         let allLis = document.querySelectorAll("li")
-    //         for(const li of allLis){
-    //             if (li.innerText[0] === "a"){
-    //                 document.querySelector('ul#dog-breeds').innerHTML = "";
-    //                 let child = document.createElement("li")
-    //                 child.innerText = li.innerText
-    //                 document.querySelector('ul#dog-breeds').append(child)
-    //             }
-    //         }
-    //         break
-    //     case "b":
-    //         console.log("B")
-    //         for(const li of allLis){
-    //             if (li.innerText[0] === "b"){
-    //                 document.querySelector('ul#dog-breeds').innerHTML = "";
-    //                 document.querySelector('ul#dog-breeds').appendChild(li)
-    //             }
-    //         }
-            // for(const li of allLis){
-            //     if (li.innerText[0] === "b"){
-            //         console.log("WORKING")
-            //         document.querySelector('ul#dog-breeds').innerHTML = "";
-            //         let child = document.createElement('li')
-            //         text = li.innerText
-            //         child.innerText = text
-            //         let uldogs = document.querySelector('ul#dog-breeds')
-            //         uldogs.appendChild(child)
-            //     }
-            // }
-    //     break
-            
-     
-     
-
     fetch("https://dog.ceo/api/breeds/list/all")
         .then(resp => resp.json())
         .then(breeds => addBreed(breeds.message))
+
+    function addBreed(breeds) {
+        for (let element in breeds) {
+            if (letter != "all" && element[0] ===letter || letter === "all"){
+            //debugger
+                addLiTag(element)
+                if (breeds[element].length != 0) {
+                    let ul = document.createElement('ul');
+                    for (const subBreed of breeds[element]) {
+                        let li = document.createElement('li')
+                        li.innerText = subBreed
+                        ul.appendChild(li);
+                        document.getElementById(element).appendChild(ul);
+                        }
+                }
+            }
+        }
+
+    }
+}
+    
+            
 
     const allLis = document.querySelectorAll("li")
     
     
     document.querySelector('#breed-dropdown').onchange = function(){
-        
+        document.querySelector('ul#dog-breeds').innerHTML = "";
         
         switch(document.querySelector('#breed-dropdown').value){
-                case "a":
-                    console.log('IT CHANGED TO A')
-                    for(const li of allLis){
-                        if (li.innerText[0] === "a"){
-                            document.querySelector('ul#dog-breeds').innerHTML = "";
-                            let child = document.createElement("li")
-                            child.innerText = li.innerText
-                            document.querySelector('ul#dog-breeds').append(child)
-                        }
-                    }
+                    case "all":
+                    filterBreeds()
                     break
-                
+                    case "a":
+                        filterBreeds("a")
+                        break
                     case "b":
-                        console.log('IT CHANGED TO B')
-                    for(const li of allLis){
-                        if (li.innerText[0] === "b"){
-                            document.querySelector('ul#dog-breeds').innerHTML = "";
-                            document.querySelector('ul#dog-breeds').appendChild(li)
-                        }
-                    }
+                        filterBreeds("b")
+                        break
+                    case "c":
+                        filterBreeds("c")
+                        break
+                    case "d":
+                        filterBreeds("d")
+                    break
+
     }
 
     }
